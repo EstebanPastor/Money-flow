@@ -1,2 +1,2 @@
-﻿*.cshtml linguist-language=C#
-wwwroot/* linguist-vendored
+﻿*.cshtml linguist-generated=true
+*.cs linguist-detectable=true
