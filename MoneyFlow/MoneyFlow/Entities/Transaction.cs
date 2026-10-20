@@ -15,7 +15,7 @@ public class Transaction
 
     public string Commment { get; set;  }
 
-    public decimal Total { get; set; }
+    public decimal TotalAmount { get; set; }
 
     public Service Service { get; set; }
 
