@@ -1,0 +1,29 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MoneyFlow.Context;
+using MoneyFlow.Entities;
+using MoneyFlow.Models;
+
+namespace MoneyFlow.Managers
+{
+    public class ServiceManager(AppDBContext _dbContext)
+    {
+
+        public List<ServiceVM> GetAll(int userId)
+        {
+
+            var list = _dbContext.Service.
+                Where(item => item.UserId == userId).
+                Select(item => new ServiceVM
+                {
+                    ServiceId = item.ServiceId,
+                    UserId = item.UserId,
+                    Name = item.Name,
+                    Type = item.Type
+                })
+                .ToList();
+
+            return list;
+        }
+
+    }
+}
