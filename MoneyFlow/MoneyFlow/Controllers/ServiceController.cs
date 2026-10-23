@@ -61,5 +61,13 @@ namespace MoneyFlow.Controllers
 
             return View();
         }
+
+      
+        public IActionResult Delete(int id)
+
+        {
+            var response = _serviceManager.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

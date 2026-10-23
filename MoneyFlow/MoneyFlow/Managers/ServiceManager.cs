@@ -71,5 +71,17 @@ namespace MoneyFlow.Managers
             return affected_rows;
         }
 
+        public int Delete(int id)
+        {
+            var entity = _dbContext.Service.Find(id);
+
+            _dbContext.Service.Remove(entity);
+
+            var affected_rows = _dbContext.SaveChanges();
+
+            return affected_rows;
+
+        }
+
     }
 }
