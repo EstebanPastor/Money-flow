@@ -37,5 +37,29 @@ namespace MoneyFlow.Controllers
             ViewBag.message = "Error, we couldn't add your service";
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+
+        {
+            var model = _serviceManager.GetServiceById(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ServiceVM model) 
+
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var response = _serviceManager.Edit(model);
+            if (response > 0) return RedirectToAction("Index");
+            ViewBag.message = "Error, we couldn't add your service";
+
+            return View();
+        }
     }
 }

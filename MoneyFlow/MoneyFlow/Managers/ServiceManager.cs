@@ -39,9 +39,36 @@ namespace MoneyFlow.Managers
 
             _dbContext.Service.Add(entity);
 
-            var rowsAffected = _dbContext.SaveChanges();
+            var affected_rows = _dbContext.SaveChanges();
 
-            return rowsAffected;
+            return affected_rows;
+        }
+
+        public ServiceVM GetServiceById(int id)
+        {
+            var entity = _dbContext.Service.Find(id);
+
+            var model = new ServiceVM
+            {
+                ServiceId = id,
+                Name = entity.Name,
+                Type = entity.Type,
+            };
+
+            return model;
+        
+        }
+
+        public int Edit(ServiceVM model)
+        {
+            var entity = _dbContext.Service.Find(model.ServiceId);
+
+            entity.Name = model.Name;
+            entity.Type = model.Type;
+
+            _dbContext.Service.Update(entity);
+            var affected_rows = _dbContext.SaveChanges();
+            return affected_rows;
         }
 
     }
