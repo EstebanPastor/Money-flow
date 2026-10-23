@@ -1,4 +1,5 @@
 ﻿using MoneyFlow.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoneyFlow.Models
 {
@@ -9,8 +10,11 @@ namespace MoneyFlow.Models
 
         public int UserId { get; set; }
 
-        public string Name { get; set; }
 
-        public string Type { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "This field is required")]
+        public string Type { get; set; } = string.Empty;
     }
 }

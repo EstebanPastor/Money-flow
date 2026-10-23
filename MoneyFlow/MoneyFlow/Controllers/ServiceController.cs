@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyFlow.Managers;
+using MoneyFlow.Models;
 
 namespace MoneyFlow.Controllers
 {
@@ -11,6 +12,30 @@ namespace MoneyFlow.Controllers
             var list = _serviceManager.GetAll(1);
 
             return View(list);
+        }
+        [HttpGet]
+        public IActionResult New()
+
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult New(ServiceVM model)
+        {
+           
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            model.UserId = 1;
+            var response = _serviceManager.New(model);
+
+            if (response > 0) return RedirectToAction("Index");
+
+            ViewBag.message = "Error, we couldn't add your service";
+            return View(model);
         }
     }
 }

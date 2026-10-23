@@ -25,5 +25,24 @@ namespace MoneyFlow.Managers
             return list;
         }
 
+        public int New(ServiceVM viewModel)
+        { 
+
+            var entity = new Service
+            
+            {
+                Name = viewModel.Name,
+                Type = viewModel.Type,
+                UserId = viewModel.UserId
+
+            };
+
+            _dbContext.Service.Add(entity);
+
+            var rowsAffected = _dbContext.SaveChanges();
+
+            return rowsAffected;
+        }
+
     }
 }
