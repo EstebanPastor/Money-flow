@@ -26,10 +26,10 @@ namespace MoneyFlow.Managers
         }
 
         public int New(ServiceVM viewModel)
-        { 
+        {
 
             var entity = new Service
-            
+
             {
                 Name = viewModel.Name,
                 Type = viewModel.Type,
@@ -56,7 +56,7 @@ namespace MoneyFlow.Managers
             };
 
             return model;
-        
+
         }
 
         public int Edit(ServiceVM model)
@@ -81,6 +81,17 @@ namespace MoneyFlow.Managers
 
             return affected_rows;
 
+        }
+
+        public List<ServiceVM> GetByType(int userId, string type)
+        {
+            var list = _dbContext.Service.
+                Where(item => item.UserId == userId && item.Type == type).Select(item => new ServiceVM
+                {
+                    ServiceId = item.ServiceId,
+                    Name = item.Name
+                }).ToList();
+            return list;
         }
 
     }

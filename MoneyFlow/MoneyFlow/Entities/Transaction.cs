@@ -7,13 +7,9 @@ public class Transaction
     public int ServiceId { get; set; }
 
     public DateOnly Date { get; set; }
-
-    public int MyProperty { get; set; }
-
-
     public int UserId { get; set; }
 
-    public string Commment { get; set;  }
+    public string Comment { get; set;  }
 
     public decimal TotalAmount { get; set; }
 
