@@ -1,0 +1,76 @@
+﻿<h2>Transaction History</h2>
+<div class="row align-items-end mb-3">
+    <div class="col-sm-3">
+        <label for="txtStartDate" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="txtStartDate" />
+    </div>
+    <div class="col-sm-3">
+        <label for="txtEndDate" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="txtEndDate" />
+    </div>
+    <div class="col-sm-3">
+        <button type="button" class="btn btn-primary" onclick="SearchTransaction()">Search</button>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-12">
+        <table id="myTable" class="display" style="width:100%"></table>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" />
+}
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <script>
+        let tableDate;
+
+        $(document).ready(function () {
+            const today = new Date().toISOString().split("T")[0];
+
+            $("#txtStartDate").val(today);
+            $("#txtEndDate").val(today);
+
+            tableDate = $('#myTable').DataTable({
+                "ajax": {
+                    "url": `/Transaction/HistoryTransaction?startDate=${today}&EndDate=${today}`,
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    { title: "Date", "data": "date", width: "150px" },
+                    { title: "Month", "data": "month", width: "150px" },
+                    { title: "TypeService", "data": "typeService", width: "150px" },
+                    { title: "Service", "data": "service", width: "150px" },
+                    { title: "Total Amount", "data": "totalAmount", width: "150px" }
+                ],
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                }
+            });
+        });
+
+        function SearchTransaction() {
+            const startDate = $("#txtStartDate").val();
+            const endDate = $("#txtEndDate").val();
+
+            const new_url = `/Transaction/HistoryTransaction?startDate=${startDate}&EndDate=${endDate}`;
+            tableDate.ajax.url(new_url);
+            tableDate.ajax.reload();
+        }
+    </script>
+}

@@ -31,5 +31,19 @@ namespace MoneyFlow.Controllers
 
             return Ok(response);
         }
+
+        public IActionResult History()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult HistoryTransaction(DateOnly startDate, DateOnly EndDate)
+        {
+            var userId = 1;
+            var list = _transactionManager.GetHistory(startDate, EndDate, userId);
+            return Ok(list);
+        }
     }
 }
